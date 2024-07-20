@@ -8,7 +8,9 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*', // or specify your client URL
+  }));
 app.use('/api/auth', authRoute);
 app.use('/api/expense', expenseRoute)
 
