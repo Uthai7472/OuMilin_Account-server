@@ -86,3 +86,27 @@ exports.recordExpense = async (req, res) => {
     }
 }
 
+exports.deleteExpense = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Expense ID is required' });
+    }
+
+    try {
+        const result = await new Promise((resolve, reject) => {
+            pool.query(`
+                DELETE FROM tb_expense WHERE id = ?
+                `, [id], (err, results) => {
+                    if (err) return reject(err);
+                    resolve(results);
+                })
+        });
+
+        console.log('Delete expense successfully', result);
+        res.status(200).json({ message: 'Delete expense successfully' });
+    } catch (error) {
+        console.log('Delete expense failed', error.message);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
