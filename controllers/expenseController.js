@@ -57,7 +57,8 @@ exports.recordExpense = async (req, res) => {
     }
 
     const values = expenses.map(expense => {
-        const adjustedDate = moment(expense.date).add(1, 'day').format('YYYY-MM-DD');
+        const adjustedDate = moment(expense.date).subtract(0, 'day').format('YYYY-MM-DD');
+        console.log(`Original date: ${expense.date}, Adjusted date: ${adjustedDate}`);
         return [
             req.user.username,
             adjustedDate,
